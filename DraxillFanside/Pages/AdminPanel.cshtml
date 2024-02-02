@@ -1,6 +1,8 @@
 ﻿@page
 @model DraxillFanside.Pages.AdminPanelModel
-
+@{
+    ViewData["Title"] = "Admin Panel";
+}
 <h2>Admin Panel</h2>
 
 @if (Model.Users.Any())
@@ -20,9 +22,19 @@
                     <td>@user.Username</td>
                     <td>@user.Role</td>
                     <td>
-                        <form method="post" asp-page-handler="Delete">
+                        <form method="post" asp-page-handler="UpdateRole" style="margin: auto;">
                             <input type="hidden" name="username" value="@user.Username" />
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <select name="newRole">
+                                <option value="user">user</option>
+                                <option value="admin">admin</option>
+                            </select>
+                            <button type="submit" class="btn btn-success">Manage Role</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" style="margin: auto; padding: auto; display: flex;">
+                            <input type="hidden" name="username" value="@user.Username" />
+                            <button type="submit" class="btn btn-danger">Delete User</button>
                         </form>
                     </td>
                 </tr>

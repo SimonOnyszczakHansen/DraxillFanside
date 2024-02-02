@@ -22,5 +22,14 @@ namespace DraxillFanside.Pages
             UserStore.DeleteUser(username); //Call the DeleteUser method to remove a user from the website
             return RedirectToPage(); //Refresh the page
         }
+        public IActionResult OnPostUpdateRole(string username, string newRole)
+        {
+            if (HttpContext.Session.GetString("role") != Roles.Admin)
+            {
+                return Unauthorized();
+            }
+            UserStore.UpdateUserRole(username, newRole);
+            return RedirectToPage();
+        }
     }
 }

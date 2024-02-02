@@ -32,7 +32,7 @@ namespace DraxillFanside.Pages
                 }
                 else
                 {
-                    HttpContext.Session.SetString("role", "User"); //if not, we give the user a default role wich is "User"
+                    HttpContext.Session.SetString("role", "user"); //if not, we give the user a default role wich is "User"
                 }
                 return RedirectToPage("/Index"); //redirects the user to the index page when logged in sucessfully
             }

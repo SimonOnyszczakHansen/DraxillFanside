@@ -1,7 +1,12 @@
 [
   {
-    "Username": "admin",
+    "Username": "Admin",
     "Password": "Kode1234!",
-    "Role": "Admin"
+    "Role": "admin"
+  },
+  {
+    "Username": "User",
+    "Password": "123",
+    "Role": "user"
   }
 ]

@@ -16,3 +16,28 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.navbar {
+    background-color: limegreen;
+}
+
+.nav-item {
+    color: lightgrey;
+}
+
+.indexContainer {
+    display: flex; /* Ensures flex behaviors apply to children */
+    justify-content: center; /* Centers children horizontally in the container */
+    margin: 0 auto; /* Centers .indexContainer itself in the page */
+    width: 50%;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between; /* Keeps the flex items apart */
+    width: 100%; /* Ensures the flex-container spans the full width of its parent */
+}
+
+.flex-item {
+    flex-basis: 48%; /* Adjust if necessary to fit side-by-side within .indexContainer */
+}

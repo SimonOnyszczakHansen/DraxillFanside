@@ -1,5 +1,8 @@
 ﻿@page
 @model DraxillFanside.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
 
 <h2>Login</h2>
 
@@ -12,7 +15,7 @@
     </div>
     <div class="mb-3">
         <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" class="form-control" />
+        <input asp-for="Password" class="form-control" type="password" />
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
     <a class="btn btn-primary" asp-page="/Register">Register</a>

@@ -36,7 +36,7 @@ namespace DraxillFanside
         {
             if (string.IsNullOrEmpty(user.Role))
             {
-                user.Role = "User";
+                user.Role = "user";
             }
             _users.Add(user);
             SaveUsers();
@@ -66,6 +66,15 @@ namespace DraxillFanside
         public static List<User> GetAllUsers()
         {
             return _users;
+        }
+        public static void UpdateUserRole(string username, string newRole)
+        {
+            var user = _users.FirstOrDefault(u =>u.Username.Equals(username, System.StringComparison.OrdinalIgnoreCase));
+            if (user != null)
+            {
+                user.Role = newRole;
+                SaveUsers();
+            }
         }
     }
 }
