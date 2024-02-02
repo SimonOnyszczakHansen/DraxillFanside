@@ -1,0 +1,16 @@
+﻿@page
+@model DraxillFanside.Pages.ProfileModel
+
+<h2>Profile</h2>
+
+@if (Model.CurrentUser != null)
+{
+    <div>
+        <p>Username: @Model.CurrentUser.Username</p>
+        <p>Role: @Model.UserRole</p>
+    </div>
+}
+else
+{
+    <p>User not found or not logged in</p>
+}
