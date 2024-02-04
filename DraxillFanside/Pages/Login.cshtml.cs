@@ -3,41 +3,36 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DraxillFanside.Pages
 {
+    // Manages user login functionality.
     public class LoginModel : PageModel
     {
         [BindProperty]
-        public string Username { get; set; } //Username entered by the user
+        public string Username { get; set; }
 
         [BindProperty]
-        public string Password { get; set; } //Password entered by the user
+        public string Password { get; set; }
 
-        public void OnGet()
+        // Attempts to log in the user with the provided username and password.
+        public IActionResult OnPost()
         {
-        }
-
-        public IActionResult OnPost() //handle POST request when the user attempts to log in
-        {
-            if (!ModelState.IsValid) //Checks if the model state is valid 
+            if (!ModelState.IsValid)
             {
-                return Page(); //Return the same page to display validation errors
+                return Page(); // Return with errors if the model state is invalid.
             }
 
-            var user = UserStore.GetUser(Username); //Retrieves the user by username 
-            if (user != null && user.Password == Password) //Cheks if the user exists and the passwords match
+            var user = UserStore.GetUser(Username);
+
+            // Verify the user exists and the password matches.
+            if (user != null && user.Password == Password)
             {
-                HttpContext.Session.SetString("username", Username); //Sets the username to signify that the user logged in
-                if (!string.IsNullOrEmpty(user.Role)) //Checks if the user has a role
-                {
-                    HttpContext.Session.SetString("role", user.Role); //If yes, we store it in the session
-                }
-                else
-                {
-                    HttpContext.Session.SetString("role", "user"); //if not, we give the user a default role wich is "User"
-                }
-                return RedirectToPage("/Index"); //redirects the user to the index page when logged in sucessfully
+                HttpContext.Session.SetString("username", Username);
+                HttpContext.Session.SetString("role", user.Role ?? "user"); // Default to "user" role if none specified.
+
+                return RedirectToPage("/Index");
             }
 
-            ModelState.AddModelError(string.Empty, "Invalid username or password"); //If username or password is incorrect, display error
+            // If login fails, show an error message.
+            ModelState.AddModelError(string.Empty, "Invalid username or password");
             return Page();
         }
     }

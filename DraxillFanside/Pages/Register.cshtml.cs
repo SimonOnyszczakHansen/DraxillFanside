@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DraxillFanside.Pages
 {
+    // Handles user registration functionality.
     public class RegisterModel : PageModel
     {
         [BindProperty]
@@ -14,21 +15,12 @@ namespace DraxillFanside.Pages
         [BindProperty]
         public string ConfirmPassword { get; set; }
 
-        public void OnGet()
-        {
-        }
-
+        // Processes the registration request.
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Password != ConfirmPassword)
             {
-                ModelState.AddModelError(string.Empty, "Invalid registration details");
-                return Page();
-            }
-
-            if (Password != ConfirmPassword)
-            {
-                ModelState.AddModelError(string.Empty, "Passwords do not match");
+                ModelState.AddModelError(string.Empty, "Invalid registration details or passwords do not match.");
                 return Page();
             }
 

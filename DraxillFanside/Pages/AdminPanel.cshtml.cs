@@ -1,35 +1,47 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Cryptography.X509Certificates;
 
 namespace DraxillFanside.Pages
 {
+    // Manages the administrative panel functionality, including user role management and user deletion.
     public class AdminPanelModel : PageModel
     {
-        public List<User> Users { get; set; } //Property to hold the list of users
-        public IActionResult OnGet() //Handles GET requests to the admin page
+        // Holds the list of users for display in the admin panel.
+        public List<User> Users { get; set; }
+
+        // Retrieves all users and verifies admin role on page load.
+        public IActionResult OnGet()
         {
-            Users = UserStore.GetAllUsers(); //Retrieves all the users from the UserStore and assign them to the Users property
-            var role = HttpContext.Session.GetString("role"); //Retrieve the users role
-            if (role != Roles.Admin) //Checks if the user is an admin
+            Users = UserStore.GetAllUsers(); // Populate the Users property with all users from the store.
+            var role = HttpContext.Session.GetString("role");
+
+            // Redirect non-admin users to the homepage to enforce admin-only access.
+            if (role != Roles.Admin)
             {
-                return RedirectToPage("/Index"); //returns user to the index page if not an admin
+                return RedirectToPage("/Index");
             }
-            return Page(); //If the user is an admin, return to the page to display admin panel
+
+            return Page();
         }
-        public IActionResult OnPostDelete(string username) //Handles the post request for deleting a user
+
+        // Handles user deletion requests.
+        public IActionResult OnPostDelete(string username)
         {
-            UserStore.DeleteUser(username); //Call the DeleteUser method to remove a user from the website
-            return RedirectToPage(); //Refresh the page
+            UserStore.DeleteUser(username); // Remove the specified user from the store.
+            return RedirectToPage(); // Refresh the page to reflect the deletion.
         }
+
+        // Handles requests to update a user's role.
         public IActionResult OnPostUpdateRole(string username, string newRole)
         {
+            // Ensure only admins can change roles.
             if (HttpContext.Session.GetString("role") != Roles.Admin)
             {
                 return Unauthorized();
             }
-            UserStore.UpdateUserRole(username, newRole);
-            return RedirectToPage();
+
+            UserStore.UpdateUserRole(username, newRole); // Update the role for the specified user.
+            return RedirectToPage(); // Refresh the page to reflect the role change.
         }
     }
 }
